@@ -41,18 +41,18 @@
       sudo: no
       shell: rpm -ivh /vagrant/files/{{ util_linux_srpm }}
       when: ( _libuuid_devel.stat.exists  == false ) or
-            ( _libblkid_devel.stat.exists == false ) 
+            ( _libblkid_devel.stat.exists == false )
 
-    - name: build libuuid-devel and libblkid-devel 
+    - name: build libuuid-devel and libblkid-devel
       sudo: no
       shell: rpmbuild -ba --define="dist .el7" SPECS/util-linux.spec
       args:
         chdir: ~/rpmbuild/
       when: ( _libuuid_devel.stat.exists  == false ) or
-            ( _libblkid_devel.stat.exists == false ) 
+            ( _libblkid_devel.stat.exists == false )
 
-    - name: install libuuid-devel and libblkid-devel 
+    - name: install libuuid-devel and libblkid-devel
       yum: name="{{ util_linux_rpms_dir }}/{{ item.filename }}" state=present
       with_items: util_linux_rpms
       when: ( _libuuid_devel.stat.exists  == false ) or
-            ( _libblkid_devel.stat.exists == false ) 
+            ( _libblkid_devel.stat.exists == false )
